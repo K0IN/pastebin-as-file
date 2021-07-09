@@ -11,6 +11,7 @@ setup(
     long_description = readme(),
     keywords = 'pastebin file file-like',
     url = 'http://github.com/K0IN/pastebinfs',
+    long_description_content_type='text/markdown',
     author = 'K0IN',
     author_email = 'thisk0in@gmail.com',
     license = 'MIT',
