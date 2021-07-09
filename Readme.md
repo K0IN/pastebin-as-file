@@ -12,13 +12,15 @@ Don't take it serious it's just a project to have some fun
 * Add async operations
 * Add missing tests
 
-## install locally
+## install
+
+### git
 
 > pip install .
 
-## uninstall
+### pypi
 
-> pip uninstall pastebinfs
+> pip install pastebinfs
 
 ## Example
 
