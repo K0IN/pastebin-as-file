@@ -6,7 +6,7 @@ def readme():
 
 setup(
     name = 'pastebinfs',
-    version = '0.2',
+    version = '0.3',
     description = 'Using Pastebin pastes as if they were files',
     long_description = readme(),
     keywords = 'pastebin file file-like',

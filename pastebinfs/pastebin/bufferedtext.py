@@ -3,7 +3,6 @@ Pastebin Buffered text File implementation
 """
 
 import io
-import base64
 from typing import List, Optional, final
 
 from pastebinfs.pastebin import pastebinapi
@@ -55,11 +54,10 @@ class BufferedTextPastebinFile(io.TextIOBase):
         if not self._loaded:
             if 'r' in self._open_mode or 'a' in self._open_mode:
                 paste_content_encoded = pastebinapi.get_paste_for_path(self._path, self._api_key, self._user_key)
-                file_content = base64.b64decode(paste_content_encoded).decode()            
-                
+
                 old_seek_pos = self._buffer.tell()
                 self._buffer.seek(0, io.SEEK_SET)
-                self._buffer.write(file_content)
+                self._buffer.write(paste_content_encoded)
                 self._buffer.seek(old_seek_pos, io.SEEK_SET)
 
                 if 'a' in self._open_mode:
@@ -116,12 +114,11 @@ class BufferedTextPastebinFile(io.TextIOBase):
             old_seek_pos = self._buffer.tell()
             self._buffer.seek(0, io.SEEK_SET)
             data = self._buffer.read()
-            base_64_data = base64.b64encode(data.encode())
-            
-            if len(base_64_data) > MAX_FILE_SIZE:
+           
+            if len(data) > MAX_FILE_SIZE:
                 raise BufferError("cannot upload file - too large")
 
-            pastebinapi.create_or_update_paste(self._path, base_64_data, self._api_key, self._user_key)
+            pastebinapi.create_or_update_paste(self._path, data, self._api_key, self._user_key)
 
             self._buffer.seek(old_seek_pos, io.SEEK_SET)
 
