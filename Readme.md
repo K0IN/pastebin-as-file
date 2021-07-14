@@ -8,7 +8,7 @@ Don't take it serious it's just a project to have some fun
 * Add support for none buffered files
 * Split huge files to multiple pastes
 * Add encoding options
-* Add os function support (move, cpy, list)
+* Add os function support (move, cpy)
 * Add async operations
 * Add missing tests
 
@@ -32,4 +32,10 @@ with pastebinfs.sync.pastebin_open("test.txt", "w", api_key, user_key) as f:
 
 with pastebinfs.sync.pastebin_open("test.txt", "r", api_key, user_key) as f:
     print(f.read()) # yields "hello pastebin this is a test"
+
+print(pastebinfs.os.stat("test.txt", api_key, user_key))
+# st_birthtime == 1297953260 # last update time
+# st_key == '0b42rwhf' # paste key (this changes on every write)
+# st_mode == 1  # paste visibility mode (unlisted)
+# st_size == 29 # paste size (note in binary mode the size will be len(base64(input)))
 ```
