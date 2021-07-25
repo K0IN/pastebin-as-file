@@ -6,9 +6,9 @@ Don't take it serious it's just a project to have some fun
 ## TODO
 
 * Add support for none buffered files
+* Open a paste with a specific id
 * Split huge files to multiple pastes
 * Add encoding options
-* Add os function support (move, cpy)
 * Add async operations
 * Add missing tests
 

@@ -109,3 +109,4 @@ def pastebin_open(path: str, open_mode: str = "rt", api_key: str = None, user_ke
         return bufferedbyte.BufferedBinaryPastebinFile(path, api_key, user_key, open_mode)
 
     return bufferedtext.BufferedTextPastebinFile(path, api_key, user_key, open_mode)
+
