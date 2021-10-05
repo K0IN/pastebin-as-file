@@ -6,7 +6,7 @@ def readme():
 
 setup(
     name = 'pastebinfs',
-    version = '0.3',
+    version = '0.4',
     description = 'Using Pastebin pastes as if they were files',
     long_description = readme(),
     long_description_content_type='text/markdown',
@@ -19,5 +19,4 @@ setup(
     zip_safe = False,
     install_requires = [
         'requests'
-    ]
-)
+    ])
