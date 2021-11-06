@@ -25,6 +25,7 @@ Don't take it serious it's just a project to have some fun
 user_key = pastebinfs.sync.pastebin_auth(api_key, username, password)
 
 with pastebinfs.sync.pastebin_open("test.txt", "w", api_key, user_key) as f:
+    # f implements all file methodes - just like open
     f.write("hello pastebin this is a test")
 
 with pastebinfs.sync.pastebin_open("test.txt", "r", api_key, user_key) as f:
