@@ -17,5 +17,8 @@ with pastebinfs.sync.pastebin_open("test.txt", "w", api_key, user_key) as file:
 with pastebinfs.sync.pastebin_open("test.txt", "r", api_key, user_key) as file:
     print(file.read())
 
-
 print(pastebinfs.os.stat("test.txt", api_key, user_key))
+
+pastebinfs.os.move("test.txt", "new_test.txt", api_key, user_key)
+
+pastebinfs.os.remove("new_test.txt", api_key, user_key)

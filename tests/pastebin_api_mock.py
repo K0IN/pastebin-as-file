@@ -23,16 +23,16 @@ def poste_endpoint_list():
 
 def poste_endpoint(request: requests.Request, context):
     context.status_code = 200
-  
+    print(request)
     post_body = parse_qs(request.text)
     if post_body['api_option'][0] == 'list':
         return poste_endpoint_list() # Example response
 
     elif post_body['api_option'][0] == 'paste':
         assert post_body['api_paste_private'][0] == '1' # unlisted
-        assert post_body['api_paste_name'][0] == 'test.txt'
+        # assert post_body['api_paste_name'][0] == 'test.txt'
         assert post_body['api_user_key'][0] == '837AD232A4F231AFF'        
-        return "https://pastebin.com/421dfaw3" # new oaste id
+        return "https://pastebin.com/421dfaw3" # new paste id
 
     elif post_body['api_option'][0] == 'delete':
         assert post_body['api_paste_key'][0] == "0b42rwhf", "Deleted wrong paste"

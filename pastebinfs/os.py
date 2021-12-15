@@ -20,9 +20,7 @@ def stat(path: str, api_key: str, user_key: str) -> patebin_stat_result:
 
         api_key {str} -- the api_key of the application.
 
-        username {str} -- the username of the user that wants to login.
-
-        password {str} -- the password of the user that wants to login.
+        user_key {str} -- the user_key of the user that wants to do the action.
 
     Returns:
         file_info {patebin_stat_result} -- A Object of ``patebin_stat_result`` containing infos about the queried file.
@@ -44,8 +42,30 @@ def stat(path: str, api_key: str, user_key: str) -> patebin_stat_result:
     stat_result.st_key = first_paste['paste_key']
     return stat_result
 
+def remove(path: str, api_key: str, user_key: str):
+    """Removes a file at path
 
-def cp(from_path: str, to_path: str, api_key: str, user_key: str) -> str:
+    Delete a file.
+
+    Arguments:
+        path {str} -- path of the file to delete.
+
+        api_key {str} -- the api_key of the application.
+
+        user_key {str} -- the user_key of the user that wants to do the action.
+
+    Raises:
+        FileNotFoundError: If the file at ``path`` can't be found.        
+    """
+    pastes = pastebinapi.get_all_pastes_ids_with_path(path, api_key, user_key)
+    if not pastes:
+        raise FileNotFoundError("cant find file")
+
+    for paste in pastes:
+        pastebinapi.delete_paste(paste, api_key, user_key)
+
+
+def copy(from_path: str, to_path: str, api_key: str, user_key: str) -> str:
     """Copy a file form ``from_path`` to ``to_path``
 
     Copy a file form ``from_path`` to ``to_path`` and return new file id.
@@ -54,12 +74,10 @@ def cp(from_path: str, to_path: str, api_key: str, user_key: str) -> str:
         from_path {str} -- path of the file to copy from.
 
         to_path {str} -- path where the file will be copied to.
-
+        
         api_key {str} -- the api_key of the application.
 
-        username {str} -- the username of the user that wants to login.
-
-        password {str} -- the password of the user that wants to login.
+        user_key {str} -- the user_key of the user that wants to do the action.
 
     Returns:
         file_id {patebin_stat_result} -- the id of the new file.
@@ -67,7 +85,8 @@ def cp(from_path: str, to_path: str, api_key: str, user_key: str) -> str:
     Raises:
         FileNotFoundError: If the file at ``from_path`` can't be found.        
     """
-    raise NotImplementedError("copy is not yet supported")
+    file_content = pastebinapi.get_paste_for_path(from_path, api_key, user_key).encode('utf-8')
+    return pastebinapi.create_or_update_paste(to_path, file_content, api_key, user_key)
 
 
 def move(from_path: str, to_path: str, api_key: str, user_key: str) -> int:  
@@ -82,9 +101,7 @@ def move(from_path: str, to_path: str, api_key: str, user_key: str) -> int:
 
         api_key {str} -- the api_key of the application.
 
-        username {str} -- the username of the user that wants to login.
-
-        password {str} -- the password of the user that wants to login.
+        user_key {str} -- the user_key of the user that wants to do the action.
 
     Returns:
         file_id {patebin_stat_result} -- the id of the new file.
@@ -92,4 +109,6 @@ def move(from_path: str, to_path: str, api_key: str, user_key: str) -> int:
     Raises:
         FileNotFoundError: If the file at ``from_path`` can't be found.        
     """
-    raise NotImplementedError("move is not yet supported")
+    cp(from_path, to_path, api_key, user_key)
+    rm(from_path, api_key, user_key)
+    return 1

@@ -179,11 +179,11 @@ def get_paste_for_path(path: str, api_key: str, user_key: str) -> str:
         paste content {str} -- Returns the content of the paste.
 
     Raises:
-        ValueError: Paste does not exist
+        FileNotFoundError: Paste does not exist
     """
     list_of_paste_ids = get_all_pastes_ids_with_path(path, api_key, user_key)
     if not list_of_paste_ids:
-        raise ValueError("no paste at path found")
+        raise FileNotFoundError("no paste at path found")
     
     return get_paste(list_of_paste_ids[0], api_key, user_key)
 
